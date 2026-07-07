@@ -106,6 +106,10 @@ def _save_token_cache(username: str, auth_info: Dict[str, Any]):
     try:
         with open(cache_path, "w", encoding="utf-8") as f:
             json.dump(cache_data, f, indent=2, ensure_ascii=False)
+        try:
+            os.chmod(cache_path, 0o600)
+        except OSError:
+            logger.warning("无法限制token缓存文件权限: %s", cache_path)
         logger.info("已保存token缓存: %s", cache_path)
         if access_exp:
             logger.info(" access_token 过期时间: %s", cache_data.get("access_token_exp_readable"))
@@ -543,7 +547,7 @@ def accept_trade_offer(client: SteamClient, mutex, tradeOfferId, retry=False, de
 
     if reportToExternal:
         if not external_handler(tradeOfferId, desc):
-            return True
+            return False
 
     try:
         with mutex:

@@ -18,13 +18,16 @@ class C5Account:
 
     def post(self, path, data):
         url = "https://openapi.c5game.com/" + path
-        resp = self.client.post(url, json=data)
+        resp = self.client.post(url, json=data, timeout=10)
         self.logger.debug(f"POST {path} {json.dumps(data, ensure_ascii=False)} {resp.text}")
+        resp.raise_for_status()
+        return resp.json()
 
     def get(self, path, params):
-        url = "http://openapi.c5game.com/" + path
-        resp = self.client.get(url, params=params)
+        url = "https://openapi.c5game.com/" + path
+        resp = self.client.get(url, params=params, timeout=10)
         self.logger.debug(f"GET {path} {params} {resp.text}")
+        resp.raise_for_status()
         return resp.json()
 
     def balance(self):

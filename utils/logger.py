@@ -15,7 +15,25 @@ from steampy.exceptions import ApiException, ConfirmationExpected, EmptyResponse
 from utils.static import BUILD_INFO, CONFIG_FILE_PATH, CURRENT_VERSION, LOGS_FOLDER, STEAM_ERROR_CODES
 
 sensitive_data = []
-sensitive_keys = ["ApiKey", "TradeLink", "JoinTime", "NickName", "access_token", "trade_url", "TransactionUrl", "RealName", "IdCard"]
+sensitive_keys = [
+    "ApiKey",
+    "TradeLink",
+    "JoinTime",
+    "NickName",
+    "access_token",
+    "refresh_token",
+    "shared_secret",
+    "identity_secret",
+    "steam_password",
+    "app_key",
+    "app-key",
+    "csrf_token",
+    "session",
+    "trade_url",
+    "TransactionUrl",
+    "RealName",
+    "IdCard",
+]
 
 if not os.path.exists(LOGS_FOLDER):
     os.mkdir(LOGS_FOLDER)
